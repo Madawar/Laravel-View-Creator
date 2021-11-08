@@ -4,7 +4,7 @@ namespace Codedcell\ViewCreator\View\Components;
 
 use Illuminate\View\Component;
 
-class TextArea extends Component
+class Textarea extends Component
 {
     public $label;
     public $placeholder;
