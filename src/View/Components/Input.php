@@ -11,17 +11,25 @@ class Input extends Component
     public $name;
     public $value;
     public $model;
+    public $icon;
+    public $hint;
+    public $icoplacement;
+    public $livewire;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($label, $name, $placeholder, $model = null)
+    public function __construct($label, $name, $placeholder = null, $description = null, $hint = null, $model = null, $icon = false, $icoplacement, $livewire = true)
     {
         $this->label = $label;
         $this->name = $name;
+        $this->hint = $hint;
+        $this->icon = $icon;
         $this->placeholder = $placeholder;
-
+        $this->icoplacement = $icoplacement;
+        $this->livewire = $livewire;
+        //dd($this->icoplacement);
         $model = json_decode($model);
 
         if ($model != null) {

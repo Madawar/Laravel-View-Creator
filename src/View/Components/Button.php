@@ -4,11 +4,11 @@ namespace Codedcell\ViewCreator\View\Components;
 
 use Illuminate\View\Component;
 
-class Radio extends Component
+class Button extends Component
 {
     public $label;
-    public $placeholder;
-    public $name;
+    public $type;
+    public $icon;
     public $options;
     public $model;
     public $description;
@@ -18,14 +18,11 @@ class Radio extends Component
      *
      * @return void
      */
-    public function __construct($label, $name,  $options, $description, $inline = false, $model = null)
+    public function __construct($label, $type, $icon = false)
     {
         $this->label = $label;
-        $this->name = $name;
-        $this->model = $model;
-        $this->options = $options;
-        $this->description = $description;
-        $this->inline = $inline;
+        $this->type = $type;
+        $this->icon = $icon;
     }
 
     /**
@@ -35,6 +32,6 @@ class Radio extends Component
      */
     public function render()
     {
-        return view('viewcreator::components.radio');
+        return view('viewcreator::components.button');
     }
 }

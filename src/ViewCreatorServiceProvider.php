@@ -4,13 +4,18 @@ namespace Codedcell\ViewCreator;
 
 use Codedcell\ViewCreator\View\Components\Input;
 use Codedcell\ViewCreator\Console\CreateForm;
+use Codedcell\ViewCreator\Http\Livewire\Select;
+use Codedcell\ViewCreator\Http\Livewire\Typeahead;
 use Codedcell\ViewCreator\View\Components\Checkbox;
 use Codedcell\ViewCreator\View\Components\Date;
 use Codedcell\ViewCreator\View\Components\Password;
 use Codedcell\ViewCreator\View\Components\Radio;
-use Codedcell\ViewCreator\View\Components\Select;
+
 use Codedcell\ViewCreator\View\Components\Textarea;
+use Codedcell\ViewCreator\View\Components\Button;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class ViewCreatorServiceProvider extends ServiceProvider
 {
@@ -51,15 +56,19 @@ class ViewCreatorServiceProvider extends ServiceProvider
             $this->commands([CreateForm::class]);
         }
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'viewcreator');
-        $this->loadViewComponentsAs('viewcreator', [
-            Input::class,
-            Checkbox::class,
-            Date::class,
-            Password::class,
-            Radio::class,
-            Select::class,
-            Textarea::class
-        ]);
+        $this->loadViewsFrom(__DIR__ . '/resources/views/components', 'viewcreator');
+        Blade::component('input', Input::class);
+        Blade::component('select', Select::class);
+        Blade::component('textarea', Textarea::class);
+        Blade::component('radio', Radio::class);
+        Blade::component('checkbox', Checkbox::class);
+        Blade::component('button', Button::class);
+        Livewire::component('select', Select::class);
+        Livewire::component('typeahead', Typeahead::class);
+
+        /*
+
+        */
     }
 
     /**

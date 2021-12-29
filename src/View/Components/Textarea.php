@@ -9,17 +9,19 @@ class Textarea extends Component
     public $label;
     public $placeholder;
     public $name;
+    public $rows;
     public $value = '';
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($label, $name, $placeholder, $model = null)
+    public function __construct($label, $name, $placeholder, $rows = 4, $model = null)
     {
         $this->label = $label;
         $this->name = $name;
         $this->placeholder = $placeholder;
+        $this->rows = $rows;
         $model = json_decode($model);
         if ($model != null) {
             $default = $model->$name;

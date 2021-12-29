@@ -9,26 +9,23 @@ class Checkbox extends Component
     public $label;
     public $placeholder;
     public $name;
-    public $value;
+    public $options;
     public $model;
+    public $description;
+    public $inline;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($label, $name, $placeholder, $model = null)
+    public function __construct($label, $name,  $options, $description, $inline = false, $model = null)
     {
         $this->label = $label;
         $this->name = $name;
-        $this->placeholder = $placeholder;
-
-        $model = json_decode($model);
-        if ($model != null) {
-            $default = $model->$name;
-            $this->value = old($this->name, $default);
-        } else {
-            $this->value = old($this->name);
-        }
+        $this->model = $model;
+        $this->options = $options;
+        $this->description = $description;
+        $this->inline = $inline;
     }
 
     /**
