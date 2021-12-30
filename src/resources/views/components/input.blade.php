@@ -6,13 +6,15 @@
             <span class="text-sm text-gray-500" id="{{ $name }}-optional">{{ $hint }}</span>
         </div>
     @else
-        <label for="{{ $name }}" class="block text-sm font-medium text-gray-700">{{ $label }}</label>
+        <label for="{{ $name }}" @class([
+            'block text-sm font-medium text-gray-700',
+            'sr-only' => $sronly,
+        ])>{{ $label }}</label>
     @endif
 
     <div @class([
         'mt-1',
-        'relative rounded-md shadow-sm' => $errors->has($name),
-        'relative rounded-md shadow-sm' => $icon,
+        'relative rounded-md shadow-sm' => $errors->has($name) || $icon,
     ])>
         @if ($icon && $icoplacement == 'leading')
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -55,6 +57,6 @@
         <p class="mt-2 text-sm text-gray-500" id="{{ $name }}-description">{{ $description }}</p>
     @endisset
     @error($name)
-        <p class="mt-2 text-sm text-red-600" id="email-error">{{ $message }}</p>
+        <p class="mt-2 text-sm text-red-600" id="{{ $name }}-error">{{ $message }}</p>
     @enderror
 </div>

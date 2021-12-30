@@ -13,16 +13,18 @@ class Button extends Component
     public $model;
     public $description;
     public $inline;
+    public $class;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($label, $type, $icon = false)
+    public function __construct($label, $type, $icon = false, $class = null)
     {
         $this->label = $label;
         $this->type = $type;
         $this->icon = $icon;
+        $this->class = $class;
     }
 
     /**
