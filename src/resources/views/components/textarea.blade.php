@@ -11,7 +11,7 @@
                 $name,
             ),
         ]) rows="{{ $rows }}" name="{{ $name }}"
-            id="{{ $name }}"></textarea>
+            id="{{ $name }}" {{ $attributes->merge([]) }}></textarea>
         @error($name)
             <p class="mt-2 text-sm text-red-600" id="email-error">{{ $message }}</p>
         @enderror
