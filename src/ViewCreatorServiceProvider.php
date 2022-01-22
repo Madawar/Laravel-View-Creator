@@ -4,7 +4,7 @@ namespace Codedcell\ViewCreator;
 
 use Codedcell\ViewCreator\View\Components\Input;
 use Codedcell\ViewCreator\Console\CreateForm;
-
+use Codedcell\ViewCreator\Serial;
 use Codedcell\ViewCreator\Http\Livewire\Typeahead;
 use Codedcell\ViewCreator\View\Components\Checkbox;
 use Codedcell\ViewCreator\View\Components\Date;
@@ -31,7 +31,7 @@ class ViewCreatorServiceProvider extends ServiceProvider
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'view-creator');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'view-creator');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
@@ -67,12 +67,6 @@ class ViewCreatorServiceProvider extends ServiceProvider
         Blade::component('checkbox', Checkbox::class);
         Blade::component('button', Button::class);
         Blade::component('date', Date::class);
-
-
-
-        /*
-
-        */
     }
 
     /**
@@ -86,6 +80,10 @@ class ViewCreatorServiceProvider extends ServiceProvider
         // Register the main class to use with the facade
         $this->app->singleton('view-creator', function () {
             return new ViewCreator;
+        });
+
+        $this->app->bind('serial', function ($app) {
+            return new Serial();
         });
     }
 }

@@ -47,7 +47,8 @@
                 "Codedcell\\ViewCreator\\ViewCreatorServiceProvider"
             ],
             "aliases": {
-                "ViewCreator": "Codedcell\\ViewCreator\\ViewCreatorFacade"
+                "ViewCreator": "Codedcell\\ViewCreator\\ViewCreatorFacade",
+                "Calculator": "Codedcell\\ViewCreator\\Facades\\Serial"
             }
         }
     }

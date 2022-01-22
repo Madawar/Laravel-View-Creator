@@ -8,7 +8,7 @@
     </label>
 
 
-
+    <!--TODO: https://github.com/krisk/Fuse/issues/229 -->
     <div class="mt-1 relative" {{ $attributes->merge([]) }}>
         @if ($fuzzy)
             <input type="text" x-model="search" @click="open = true" @class([
