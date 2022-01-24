@@ -9,8 +9,14 @@
             class=" pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
     </button>
     <span class="ml-3" id="annual-billing-label">
-        <span class="text-sm font-medium text-gray-900">{{ $title }} </span>
-        <span class="text-sm text-gray-500">({{ $subtitle }})</span>
+        <span @class([
+            'text-sm font-medium text-gray-900',
+            'sr-only' => $sronly,
+        ])>{{ $title }} </span>
+        <span @class([
+            'text-sm text-gray-500',
+            'sr-only' => $sronly,
+        ])>({{ $subtitle }})</span>
         @error($name)
             <p class="mt-2 text-sm text-red-600" id="{{ $name }}-error">{{ $message }}</p>
         @enderror

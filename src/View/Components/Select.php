@@ -13,13 +13,14 @@ class Select extends Component
     public $value;
     public $sronly;
     public $fuzzy;
+    public $optionsvar;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($label, $name, $placeholder, $options = [], $sronly = false, $fuzzy = false)
+    public function __construct($label, $name, $placeholder, $options = [], $sronly = false, $fuzzy = false, $optionsvar = null)
     {
         $this->label = $label;
         $this->name = $name;
@@ -27,6 +28,7 @@ class Select extends Component
         $this->options = $options;
         $this->sronly = $sronly;
         $this->fuzzy = $fuzzy;
+        $this->optionsvar = $optionsvar;
 
         // dd($this->value);
     }

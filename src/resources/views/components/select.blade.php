@@ -1,5 +1,5 @@
-<div x-data="{fuzzy:{{ $fuzzy == 1 ? 1 : 0 }},search:'',searchOptions:'', open: false, value:@entangle($name), label:'Please Choose',options:{{ json_encode($options) }} }"
-    x-init="$watch('value', val => { (fuzzy === 1)? ( x = _.find(options, {id:val}),(x === undefined)?'':search = x.name ): label = options[val] })">
+<div x-data="{fuzzy:{{ $fuzzy == 1 ? 1 : 0 }},search:'',searchOptions:'', open: false, value:@entangle($name), label:'Please Choose',optionsvar:@entangle($optionsvar) }"
+    x-init="$watch('value', val => { (fuzzy === 1)? ( x = _.find(options, {id:val}),(x === undefined)?'':search = x.name ): label = _.isEmpty(_.pick(optionsvar, val))?'Please Choose':_.pick(optionsvar, val)[val] })">
     <label id=" listbox-label" @class([
         'block text-sm font-medium text-gray-700',
         'sr-only' => $sronly,
@@ -20,7 +20,7 @@
                     $name,
                 ),
             ])
-                @keyup="fuse = new Fuse(Object.values(options),{keys: ['name']}) ;searchOptions=JSON.parse(JSON.stringify(fuse.search(search)))" />
+                @keyup="fuse = new Fuse(Object.values(optionsvar),{keys: ['name']}) ;searchOptions=JSON.parse(JSON.stringify(fuse.search(search)))" />
 
         @else
             <button type="button" @click="open = true" @class([
@@ -109,11 +109,11 @@
 
                 </template>
             @else
-                <template x-for="id in Object.keys( options)">
+                <template x-for="[id,valop] in Object.entries( optionsvar)">
                     <li class="text-gray-900 cursor-default select-none relative py-2 pl-8 pr-4 " id="listbox-option-0"
-                        role="option" @click="value = id; label = options[id];$dispatch('input', id);open = false">
+                        role="option" @click="value = id;$dispatch('input', id);open = false">
                         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-                        <span class="font-normal block truncate" x-text="options[id]">
+                        <span class="font-normal block truncate" x-text="valop">
                             Clear Selected Item
                         </span>
                         <span x-show="id == value"
