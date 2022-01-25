@@ -1,5 +1,45 @@
-<div x-data="{fuzzy:{{ $fuzzy == 1 ? 1 : 0 }},search:'',searchOptions:'', open: false, value:@entangle($name), label:'Please Choose',optionsvar:@entangle($optionsvar) }"
-    x-init="$watch('value', val => { (fuzzy === 1)? ( x = _.find(options, {id:val}),(x === undefined)?'':search = x.name ): label = _.isEmpty(_.pick(optionsvar, val))?'Please Choose':_.pick(optionsvar, val)[val] })">
+@section('js')
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('selectsetting', (name, optionsvar) => ({
+                fuzzy: 0,
+                search: '',
+                searchOptions: '',
+                open: false,
+                value: name,
+                label: function() {
+                    if (_.isNull(this.value)) {
+                        return "Please Choose";
+                    } else {
+                        return _.pick(this.optionsvar, this.value)[this.value]
+                    }
+                },
+                optionsvar: optionsvar,
+                init() {
+                    this.$watch('value', val => {
+                        if (this.fuzzy === 1) {
+                            if (_.find(this.options, {
+                                    id: val
+                                }) === undefined) {
+                                return ''
+                            } else {
+                                this.search = x.name
+                            }
+                        } else {
+                            if (_.isEmpty(_.pick(this.optionsvar, val))) {
+                                this.label = 'Please Choose';
+                            } else {
+                                this.label = _.pick(this.optionsvar, val)[val];
+                            }
+                        }
+                    })
+                },
+            }))
+        })
+    </script>
+@endsection
+
+<div x-data="selectsetting(@entangle($name),@entangle($optionsvar))">
     <label id=" listbox-label" @class([
         'block text-sm font-medium text-gray-700',
         'sr-only' => $sronly,
@@ -119,10 +159,11 @@
                         <span x-show="id == value"
                             class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
                             <!-- Heroicon name: solid/check -->
+
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    d="M5 13l4 4L19 7" />
                             </svg>
 
                         </span>
