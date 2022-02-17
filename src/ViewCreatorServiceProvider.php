@@ -10,9 +10,7 @@ use Codedcell\ViewCreator\View\Components\Checkbox;
 use Codedcell\ViewCreator\View\Components\Date;
 use Codedcell\ViewCreator\View\Components\Password;
 use Codedcell\ViewCreator\View\Components\Radio;
-
 use Codedcell\ViewCreator\View\Components\Textarea;
-use Codedcell\ViewCreator\View\Components\Button;
 use Codedcell\ViewCreator\View\Components\InputSelect;
 use Codedcell\ViewCreator\View\Components\Select;
 use Illuminate\Support\Facades\Blade;
@@ -65,7 +63,6 @@ class ViewCreatorServiceProvider extends ServiceProvider
         Blade::component('textarea', Textarea::class);
         Blade::component('radio', Radio::class);
         Blade::component('checkbox', Checkbox::class);
-        Blade::component('button', Button::class);
         Blade::component('date', Date::class);
     }
 
