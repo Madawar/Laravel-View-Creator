@@ -54,22 +54,21 @@
             <input type="text" x-model="search" @click="open = true" @class([
                 'block w-full sm:text-sm rounded-md',
                 'shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500' => !$errors->has(
-                    $name,
+                    $name
                 ),
                 'pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 ' => $errors->has(
-                    $name,
+                    $name
                 ),
             ])
                 @keyup="fuse = new Fuse(Object.values(optionsvar),{keys: ['name']}) ;searchOptions=JSON.parse(JSON.stringify(fuse.search(search)))" />
-
         @else
             <button type="button" @click="open = true" @class([
                 'relative w-full  pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 sm:text-sm rounded-md',
                 'bg-white border  border-gray-300  shadow-sm focus:ring-indigo-500 focus:border-indigo-500' => !$errors->has(
-                    $name,
+                    $name
                 ),
                 'border border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 ' => $errors->has(
-                    $name,
+                    $name
                 ),
             ]) aria-haspopup="listbox"
                 aria-expanded="true" aria-labelledby="listbox-label">
@@ -170,7 +169,6 @@
                     </li>
 
                 </template>
-
             @endif
 
 

@@ -48,7 +48,8 @@
             ],
             "aliases": {
                 "ViewCreator": "Codedcell\\ViewCreator\\ViewCreatorFacade",
-                "Calculator": "Codedcell\\ViewCreator\\Facades\\Serial"
+                "Calculator": "Codedcell\\ViewCreator\\Facades\\Serial",
+                "Select": "Codedcell\\ViewCreator\\Facades\\Select"
             }
         }
     }

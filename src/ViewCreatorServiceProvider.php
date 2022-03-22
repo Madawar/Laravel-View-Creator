@@ -6,6 +6,7 @@ use Codedcell\ViewCreator\View\Components\Input;
 use Codedcell\ViewCreator\Console\CreateForm;
 use Codedcell\ViewCreator\Serial;
 use Codedcell\ViewCreator\Http\Livewire\Typeahead;
+use Codedcell\ViewCreator\Select as ViewCreatorSelect;
 use Codedcell\ViewCreator\View\Components\Checkbox;
 use Codedcell\ViewCreator\View\Components\Date;
 use Codedcell\ViewCreator\View\Components\Password;
@@ -81,6 +82,9 @@ class ViewCreatorServiceProvider extends ServiceProvider
 
         $this->app->bind('serial', function ($app) {
             return new Serial();
+        });
+        $this->app->bind('select', function ($app) {
+            return new ViewCreatorSelect();
         });
     }
 }
