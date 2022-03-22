@@ -16,8 +16,14 @@
             }
             window.getCurrent = function filter(id, options) {
                 //alert(search);
-                object = _.find(options, ['id', id]);
-                return object.text;
+                object = _.find(options, {
+                    'id': id
+                });
+                if (typeof object !== 'undefined') {
+                    return object.text;
+                }
+                return '';
+
             }
 
         });
@@ -31,8 +37,12 @@
                 open: false,
 
                 init() {
-                    this.search = _.find(this.options, ['id', this.id]).text;
-
+                    var ret = _.find(this.options, {
+                        'id': this.id
+                    });
+                    if (typeof ret !== 'undefined') {
+                        this.search = ret.text;
+                    }
                     this.filtered = this.options;
                     this.$watch('options', value => this.filtered = this.options);
                     this.$watch('id', value => {
@@ -54,7 +64,8 @@
 <label for="combobox" class="block text-sm font-medium text-gray-700">{{ $label }}</label>
 
 <div class="relative mt-1">
-    <input id="combobox" type="text" x-model="search" @click="open=true" @click.away="open=false"
+    <input id="combobox" type="text" x-model="search" @click="open=true"
+        @click.away="search=getCurrent(id,options),open=false"
         class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-12 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
         @keyup="filtered = filter(search,options)" role="combobox" aria-controls="options" aria-expanded="false">
     <input type="hidden" name="{{ $name }}" x-bind:value="id" />
