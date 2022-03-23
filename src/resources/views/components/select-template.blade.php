@@ -2,20 +2,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             window.filter = function filter(search, options) {
-                //alert(search);
-                if (search == "") {
-                    return options;
-                }
-                fuse = new Fuse(Object.values(options), {
-                    keys: ['text']
+                const fzf = new Fzf(options, {
+                    selector: (item) => item.text,
+                    casing: 'case-insensitive'
                 });
-                searchOptions = JSON.parse(JSON.stringify(fuse.search(search)));
-                ids = _.map(searchOptions, 'item.id');
-                filtered = _.intersectionWith(options, ids, (o, id) => o.id === id)
-                return filtered;
+                entries = fzf.find(search)
+                entries = entries.map(entry => JSON.parse(JSON.stringify(entry.item)));
+                return entries;
             }
             window.getCurrent = function filter(id, options) {
-                //alert(search);
                 object = _.find(options, {
                     'id': id
                 });
@@ -65,7 +60,15 @@
 
 <div class="relative mt-1">
     <input id="combobox" type="text" x-model="search" @click="open=true"
-        @click.away="search=getCurrent(id,options),open=false"
+        @click.away="search=getCurrent(id,options),open=false" @class([
+            'w-full rounded-md  bg-white py-2 pl-3 pr-12 shadow-sm  sm:text-sm',
+            'border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500' => !$errors->has(
+                $name
+            ),
+            'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 ' => $errors->has(
+                $name
+            ),
+        ])
         class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-12 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
         @keyup="filtered = filter(search,options)" role="combobox" aria-controls="options" aria-expanded="false">
     <input type="hidden" name="{{ $name }}" x-bind:value="id" />
@@ -78,9 +81,7 @@
                 clip-rule="evenodd" />
         </svg>
     </button>
-    @error($name)
-        <p class="mt-2 text-sm text-red-600" id="{{ $name }}-error">{{ $message }}</p>
-    @enderror
+
     <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         id="options" role="listbox" x-show="open" x-cloak>
         <!--
@@ -117,4 +118,7 @@
         <!-- More items... -->
     </ul>
 </div>
+@error($name)
+    <p class="mt-2 text-sm text-red-600" id="{{ $name }}-error">{{ $message }}</p>
+@enderror
 </div>
