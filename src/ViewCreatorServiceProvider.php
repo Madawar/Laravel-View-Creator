@@ -6,6 +6,7 @@ use Codedcell\ViewCreator\View\Components\Input;
 use Codedcell\ViewCreator\Console\CreateForm;
 use Codedcell\ViewCreator\Serial;
 use Codedcell\ViewCreator\Http\Livewire\Typeahead;
+use Codedcell\ViewCreator\Macros\Toaster;
 use Codedcell\ViewCreator\Select as ViewCreatorSelect;
 use Codedcell\ViewCreator\View\Components\Checkbox;
 use Codedcell\ViewCreator\View\Components\Date;
@@ -16,7 +17,7 @@ use Codedcell\ViewCreator\View\Components\InputSelect;
 use Codedcell\ViewCreator\View\Components\Select;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
+use Livewire\Component;
 
 class ViewCreatorServiceProvider extends ServiceProvider
 {
@@ -65,6 +66,9 @@ class ViewCreatorServiceProvider extends ServiceProvider
         Blade::component('radio', Radio::class);
         Blade::component('checkbox', Checkbox::class);
         Blade::component('date', Date::class);
+        Component::macro('toaster', function (?string $message = null, ?string $type = "info"): Toaster {
+            return new Toaster($message, $type, $this);
+        });
     }
 
     /**
