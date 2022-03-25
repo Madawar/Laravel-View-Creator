@@ -50,16 +50,16 @@
 @endsection
 
 @if ($isEntangle)
-    <div x-data="combo(@entangle($entangleOptions),@entangle($name))">
+    <div x-data="combo(@entangle($entangleOptions), @entangle($name))">
     @else
-        <div x-data="combo({{ Illuminate\Support\Js::from($options) }},@entangle($name))">
+        <div x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name))">
 @endif
 
 
 <label for="combobox" class="block text-sm font-medium text-gray-700">{{ $label }}</label>
 
 <div class="relative mt-1">
-    <input id="combobox" type="text" x-model="search" @click="open=true"
+    <input id="combobox" type="text" x-model="search" x-ref="input" @click="open=true"
         @click.away="search=getCurrent(id,options),open=false" @class([
             'w-full rounded-md  bg-white py-2 pl-3 pr-12 shadow-sm  sm:text-sm',
             'border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500' => !$errors->has(
@@ -90,7 +90,7 @@
         Active: "text-white bg-indigo-600", Not Active: "text-gray-900"
           :class="id == option.id ? 'text-white bg-indigo-600' : 'text-gray-900'"
       -->
-        <template x-for="option in filtered">
+        <template x-for="option in filtered" :key="option.id">
             <li @click="id = option.id;search=option.text;open=false"
                 class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 " id="option-0" role="option"
                 tabindex="-1">
