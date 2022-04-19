@@ -59,7 +59,7 @@
 <label for="combobox" class="block text-sm font-medium text-gray-700">{{ $label }}</label>
 
 <div class="relative mt-1">
-    <input id="combobox" type="text" x-model="search" x-ref="input" @click="open=true"
+    <input id="combobox" type="text" autocomplete="off" x-model="search" x-ref="input" @click="open=true"
         @click.away="search=getCurrent(id,options),open=false" @class([
             'w-full rounded-md  bg-white py-2 pl-3 pr-12 shadow-sm  sm:text-sm',
             'border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500' => !$errors->has(
@@ -115,7 +115,7 @@
             </li>
         </template>
         </template>
-        <!-- More items... -->
+
     </ul>
 </div>
 @error($name)

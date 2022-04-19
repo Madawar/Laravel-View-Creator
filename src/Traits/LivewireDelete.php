@@ -4,30 +4,43 @@ namespace Codedcell\ViewCreator\Traits;
 
 trait LivewireDelete
 {
-    public $deleteId;
+
     public $showDeleteModal = false;
+    public $deleteId = null;
     public $deleteMessage = "Are you sure you want to delete this item?";
 
-    public function __construct(?string $message = null, ?string $type = "info", ?Component &$component = null)
-    {
-        $this->component = $component;
-        $this->message = $message;
-        $this->type = $type;
-    }
 
 
-    public function showDeleteDialog()
+    public function showDeleteDialog($id)
     {
+        $this->deleteId = $id;
+        $this->dispatchBrowserEvent('livewire-deleter-open');
         $this->showDeleteModal = true;
     }
 
-    public function deleteItem()
+    public function deleteItem($model, $relationshipCheck = [])
     {
+        $nonDeletable = [];
+        $model = app("App\Models\\" . $model);
+        foreach ($relationshipCheck as $key => $value) {
+            if ($model->find($this->deleteId)->$value()->exists()) {
+                $nonDeletable[] = $value;
+            }
+        }
+        if (count($nonDeletable) > 0) {
+            $this->dispatchBrowserEvent('livewire-deleter-close');
+            $this->toaster("This item cannot be deleted because it has a relationship with " . implode(", ", $nonDeletable), "error");
+        } else {
+            $model->destroy($this->deleteId);
+            $this->dispatchBrowserEvent('livewire-deleter-close');
+            $this->toaster("Item Deleted", "success");
+        }
     }
+
 
     public function cancelDelete()
     {
-
+        $this->dispatchBrowserEvent('livewire-deleter-close');
         $this->showDeleteModal = false;
     }
 }
