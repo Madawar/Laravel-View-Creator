@@ -13,6 +13,7 @@ trait LivewireDelete
 
     public function showDeleteDialog($id)
     {
+
         $this->deleteId = $id;
         $this->dispatchBrowserEvent('livewire-deleter-open');
         $this->showDeleteModal = true;
@@ -27,6 +28,8 @@ trait LivewireDelete
                 $nonDeletable[] = $value;
             }
         }
+        $validatingModel = $model->find($this->deleteId);
+        $this->authorize('delete', $validatingModel);
         if (count($nonDeletable) > 0) {
             $this->dispatchBrowserEvent('livewire-deleter-close');
             $this->toaster("This item cannot be deleted because it has a relationship with " . implode(", ", $nonDeletable), "error");

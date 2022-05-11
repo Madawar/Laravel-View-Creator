@@ -50,9 +50,9 @@
 @endsection
 
 @if ($isEntangle)
-    <div x-data="combo(@entangle($entangleOptions), @entangle($name))">
+    <div wire:key="{{ $id }}" x-data="combo(@entangle($entangleOptions), @entangle($name))">
     @else
-        <div x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name))">
+        <div wire:key="{{ $id }}" x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name))">
 @endif
 
 
