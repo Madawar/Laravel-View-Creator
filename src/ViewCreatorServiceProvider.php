@@ -6,6 +6,8 @@ use Codedcell\ViewCreator\View\Components\Input;
 use Codedcell\ViewCreator\Console\CreateForm;
 use Codedcell\ViewCreator\Serial;
 use Codedcell\ViewCreator\Http\Livewire\Typeahead;
+use Codedcell\ViewCreator\Macros\DeleteActions;
+use Codedcell\ViewCreator\Macros\Report;
 use Codedcell\ViewCreator\Macros\Toaster;
 use Codedcell\ViewCreator\Select as ViewCreatorSelect;
 use Codedcell\ViewCreator\View\Components\Checkbox;
@@ -68,6 +70,9 @@ class ViewCreatorServiceProvider extends ServiceProvider
         Blade::component('date', Date::class);
         Component::macro('toaster', function (?string $message = null, ?string $type = "info"): Toaster {
             return new Toaster($message, $type, $this);
+        });
+        Component::macro('report', function (?string $type = "info"): Report {
+            return new Report($type, $this);
         });
     }
 
