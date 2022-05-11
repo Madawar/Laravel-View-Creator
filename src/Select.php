@@ -3,6 +3,7 @@
 namespace Codedcell\ViewCreator;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 
 class Select
@@ -52,6 +53,7 @@ class Select
             ->with('entangleOptions', $this->entangleOptions)
             ->with('isEntangle', $this->isEntangle)
             ->with('label', $this->label)
-            ->with('name', $this->name);
+            ->with('name', $this->name)
+            ->with('id', Str::replace('.', '_', $this->name));
     }
 }
