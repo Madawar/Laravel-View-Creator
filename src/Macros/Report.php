@@ -17,14 +17,14 @@ class Report
     }
 
 
-    public function pdf()
+    public function pdf($data, $filename = "Report.pdf")
     {
-        $data = $this->component->query()->get();
-        $filename = $this->component->filename;
-        $pdf = PDF::loadView($filename, compact('data'))->output();
+        $data = $data;
+        $view = $this->component->report_folder;
+        $pdf = PDF::loadView($view, compact('data'))->output();
         return response()->streamDownload(
             fn () => print($pdf),
-            "filename.pdf"
+            $filename
         );
     }
     public function __destruct()

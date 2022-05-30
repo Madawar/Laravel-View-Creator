@@ -10,7 +10,6 @@ trait LivewireDelete
     public $deleteMessage = "Are you sure you want to delete this item?";
 
 
-
     public function showDeleteDialog($id)
     {
 
