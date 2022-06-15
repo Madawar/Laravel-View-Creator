@@ -30,18 +30,20 @@ use Illuminate\Support\Str;
                 $name
             ),
         ]) type="text" name="{{ $name }}" id="{{ $name }}" wire:ignore
-            x-data="{value: @entangle($attributes->wire('model')), instance: undefined}" x-init="() => {
+            x-data="{ value: @entangle($attributes->wire('model')), instance: undefined }" x-init="() => {
                 $watch('value', value => instance.setDate(value, false));
                 instance = flatpickr($refs.input, {{ json_encode((object) $options) }});
-            }" x-ref="input" x-bind:value="value" {{ $attributes->merge([]) }} placeholder="{{ $placeholder }}"
+            }" x-ref="input" x-bind:value="value"
+            {{ $attributes->merge([]) }} placeholder="{{ $placeholder }}"
             aria-describedby="{{ $name }}-description" />
         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
             <!-- Heroicon name: solid/question-mark-circle -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+
+            @if (array_key_exists('noCalendar', $options))
+                @svg('ri-time-line', 'h-5 w-5 text-gray-400')
+            @else
+                @svg('ri-calendar-2-line', 'h-5 w-5 text-gray-400')
+            @endif
 
         </div>
         @error($name)

@@ -10,8 +10,10 @@ class Select
 {
     protected $options;
     protected $label;
+    protected $placeholder;
     protected $name;
     protected $isEntangle = false;
+    protected $hideLabel = false;
     protected $entangleOptions;
     protected $isSearchable;
 
@@ -29,9 +31,23 @@ class Select
         return $this;
     }
 
+    public function setPlaceholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
+        return $this;
+    }
+
+    public function hideLabel()
+    {
+        $this->hideLabel = true;
+        return $this;
+    }
+
+
     public function setLabel($label)
     {
         $this->label = $label;
+        $this->placeholder = $label;
         return $this;
     }
     public function setOptionsEntangle($opts)
@@ -53,6 +69,8 @@ class Select
             ->with('entangleOptions', $this->entangleOptions)
             ->with('isEntangle', $this->isEntangle)
             ->with('label', $this->label)
+            ->with('hideLabel', $this->hideLabel)
+            ->with('placeholder', $this->placeholder)
             ->with('name', $this->name)
             ->with('id', Str::replace('.', '_', $this->name));
     }
