@@ -55,12 +55,13 @@
         <div wire:key="{{ $id }}" x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name))">
 @endif
 
-
-<label for="combobox" class="block text-sm font-medium text-gray-700">{{ $label }}</label>
-
+@if ($hideLabel == false)
+    <label for="combobox" class="block text-sm font-medium text-gray-700">{{ $label }}</label>
+@endif
 <div class="relative mt-1">
-    <input id="combobox" type="text" autocomplete="off" x-model="search" x-ref="input" @click="open=true"
-        @click.away="search=getCurrent(id,options),open=false" @class([
+    <input id="combobox" type="text" autocomplete="off" placeholder="{{ $placeholder }}" x-model="search"
+        x-ref="input" @click="open=true" @click.away="search=getCurrent(id,options),open=false"
+        @class([
             'w-full rounded-md  bg-white py-2 pl-3 pr-12 shadow-sm  sm:text-sm',
             'border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500' => !$errors->has(
                 $name
