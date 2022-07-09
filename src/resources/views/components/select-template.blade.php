@@ -50,9 +50,9 @@
 @endsection
 
 @if ($isEntangle)
-    <div wire:key="{{ $id }}" x-data="combo(@entangle($entangleOptions), @entangle($name))">
+    <div wire:ignore wire:key="{{ $id }}" x-data="combo(@entangle($entangleOptions), @entangle($name))">
     @else
-        <div wire:key="{{ $id }}" x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name))">
+        <div wire:ignore wire:key="{{ $id }}" x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name))">
 @endif
 
 @if ($hideLabel == false)
@@ -91,6 +91,12 @@
         Active: "text-white bg-indigo-600", Not Active: "text-gray-900"
           :class="id == option.id ? 'text-white bg-indigo-600' : 'text-gray-900'"
       -->
+        <li @click="id = null;search='';open=false"
+            class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 " id="option-0" role="option"
+            tabindex="-1">
+            <span class="block truncate">Clear</span>
+
+        </li>
         <template x-for="option in filtered" :key="option.id">
             <li @click="id = option.id;search=option.text;open=false"
                 class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 " id="option-0" role="option"
@@ -106,8 +112,8 @@
                 <template x-if="id == option.id">
                     <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
                         <!-- Heroicon name: solid/check -->
-                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                            fill="currentColor" aria-hidden="true">
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
                             <path fill-rule="evenodd"
                                 d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                 clip-rule="evenodd" />

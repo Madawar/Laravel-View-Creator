@@ -19,8 +19,6 @@ class Select
 
     public function setOptions($options)
     {
-
-
         $this->options = $options;
         return $this;
     }
