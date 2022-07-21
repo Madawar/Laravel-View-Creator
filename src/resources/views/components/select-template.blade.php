@@ -1,58 +1,8 @@
-@section('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            window.filter = function filter(search, options) {
-                const fzf = new Fzf(options, {
-                    selector: (item) => item.text,
-                    casing: 'case-insensitive'
-                });
-                entries = fzf.find(search)
-                entries = entries.map(entry => JSON.parse(JSON.stringify(entry.item)));
-                return entries;
-            }
-            window.getCurrent = function filter(id, options) {
-                object = _.find(options, {
-                    'id': id
-                });
-                if (typeof object !== 'undefined') {
-                    return object.text;
-                }
-                return '';
-
-            }
-
-        });
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('combo', (opts, name) => ({
-                options: opts,
-                searchOptions: [],
-                search: '',
-                filtered: [],
-                id: name,
-                open: false,
-
-                init() {
-                    var ret = _.find(this.options, {
-                        'id': this.id
-                    });
-                    if (typeof ret !== 'undefined') {
-                        this.search = ret.text;
-                    }
-                    this.filtered = this.options;
-                    this.$watch('options', value => this.filtered = this.options);
-                    this.$watch('id', value => {
-                        this.search = getCurrent(this.id, this.options)
-                    })
-                },
-            }))
-        })
-    </script>
-@endsection
-
 @if ($isEntangle)
     <div wire:ignore wire:key="{{ $id }}" x-data="combo(@entangle($entangleOptions), @entangle($name))">
     @else
-        <div wire:ignore wire:key="{{ $id }}" x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name))">
+        <div wire:ignore wire:key="{{ $id }}" @values-updated.window="updatedValues(event)"
+            x-data="combo({{ Illuminate\Support\Js::from($options) }}, @entangle($name), '{{ $id }}')">
 @endif
 
 @if ($hideLabel == false)
@@ -60,8 +10,7 @@
 @endif
 <div class="relative mt-1">
     <input id="combobox" type="text" autocomplete="off" placeholder="{{ $placeholder }}" x-model="search"
-        x-ref="input" @click="open=true" @click.away="search=getCurrent(id,options),open=false"
-        @class([
+        x-ref="input" @click="open=true" @click.away="" @class([
             'w-full rounded-md  bg-white py-2 pl-3 pr-12 shadow-sm  sm:text-sm',
             'border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500' => !$errors->has(
                 $name
