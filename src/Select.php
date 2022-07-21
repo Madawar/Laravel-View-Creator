@@ -62,6 +62,7 @@ class Select
 
     public function render()
     {
+
         return view('viewcreator::components.select-template')
             ->with('options', $this->options)
             ->with('entangleOptions', $this->entangleOptions)
